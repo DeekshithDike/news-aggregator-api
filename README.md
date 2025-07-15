@@ -79,7 +79,7 @@ NYT_API_BASE_URL=https://api.nytimes.com/svc
 Manually run this command to fetch articles from NewsAPI, The Guardian, and NYTimes:
 
 ```bash
-php artisan articles:fetch
+php artisan fetch:articles
 ```
 
 This will:
@@ -95,17 +95,19 @@ Then add this cron entry to your system's (Linux/Mac) crontab (e.g., using cront
 ```bash
 * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
 ```
----
-
-### 9. API Endpoint
-
-### `GET /api/v1/articles`
-
-Returns a paginated list of articles with optional filters.
+Refer Laravel Document: https://laravel.com/docs/11.x/homestead#configuring-cron-schedules
 
 ---
 
-### 10. Query Parameters
+### 9. API Request Format
+
+# API Endpoint:
+`GET /api/v1/articles`
+
+# Required Header:
+`Accept: application/json`
+
+# Query Parameters
 
 | Parameter           | Type     | Description                                   |
 |--------------------|----------|-----------------------------------------------|
