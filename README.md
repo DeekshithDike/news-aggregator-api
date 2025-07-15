@@ -42,13 +42,16 @@ php artisan key:generate
 
 ### .5 Database Setup
 
-1. Add MySQL database credentials in `.env`
-    DB_CONNECTION=mysql
-    DB_HOST=127.0.0.1
-    DB_PORT=3306
-    DB_DATABASE=your_db_name
-    DB_USERNAME=your_user_name
-    DB_PASSWORD=your_password
+1. Configure MySQL database credentials in `.env`
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_db_name
+DB_USERNAME=your_user_name
+DB_PASSWORD=your_password
+```
 2. Run the database migration to create the `articles` table:
 
 ```bash
