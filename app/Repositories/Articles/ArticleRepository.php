@@ -13,7 +13,7 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function filter(array $filters) {
         $query = Article::query()
-            ->select('id', 'title', 'description', 'url', 'source', 'published_at');
+            ->select('id', 'title', 'description', 'url', 'source', 'category', 'author', 'published_at');
 
         // Single keyword in title or description
         if (!empty($filters['keyword'])) {
@@ -24,10 +24,32 @@ class ArticleRepository implements ArticleRepositoryInterface
             });
         }
 
-        // Filter by user preferred sources (newsapi, guardian, nytimes)
+        // Filter by category available in database
+        if (!empty($filters['category'])) {
+            $query->where('category', $filters['category']);
+        }
+
+        // Filter by source (newsapi, guardian, nytimes)
+        if (!empty($filters['source'])) {
+            $query->where('source', $filters['source']);
+        }
+
+        // Filter by selected user preferred sources (newsapi, guardian, nytimes)
         if (!empty($filters['preferred_sources'])) {
             $sources = array_map('trim', explode(',', $filters['preferred_sources']));
             $query->whereIn('source', $sources);
+        }
+
+        // Filter by selected user preferred categories (newsapi, guardian, nytimes)
+        if (!empty($filters['preferred_categories'])) {
+            $categories = array_map('trim', explode(',', $filters['preferred_categories']));
+            $query->whereIn('category', $categories);
+        }
+
+        // Filter by selected user preferred authors (newsapi, guardian, nytimes)
+        if (!empty($filters['preferred_authors'])) {
+            $authors = array_map('trim', explode(',', $filters['preferred_authors']));
+            $query->whereIn('author', $authors);
         }
 
         // Date range filtering

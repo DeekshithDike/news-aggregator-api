@@ -20,6 +20,8 @@ class ArticleResource extends JsonResource
             'description' => $this->description,
             'url' => $this->url,
             'source' => $this->source,
+            'category' => $this->category,
+            'author' => $this->author,
             'published_at' => date('d M Y', strtotime($this->published_at)),
         ];
     }

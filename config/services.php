@@ -39,6 +39,7 @@ return [
         'key' => env('NEWS_API_KEY'),
         'base_url' => env('NEWS_API_BASE_URL', 'https://newsapi.org'),
         'version' => 'v2',
+        'categories' => ['business', 'health', 'technology']
     ],
 
     'guardian' => [

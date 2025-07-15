@@ -107,12 +107,16 @@ Refer Laravel Document: https://laravel.com/docs/11.x/homestead#configuring-cron
 #### Required Header:
 `Accept: application/json`
 
-#### Query Parameters
+#### Query Parameters:
 
 | Parameter           | Type     | Description                                   |
 |--------------------|----------|-----------------------------------------------|
 | `keyword`           | string   | Search keyword (in title/description)         |
+| `category` | string   | Filter by category: `Use any one category stored in Database -> articles table -> category column Or Use technology, health, business`  |
+| `source` | string   | Filter by source: `Use any one news source - newsapi / guardian / nytimes`  |
 | `preferred_sources` | string   | Comma-separated list: `newsapi,guardian,nytimes`  |
+| `preferred_categories` | string   | Comma-separated list: `Use categories stored in Database -> articles table -> category column`  |
+| `preferred_authors` | string   | Comma-separated list: `Use authors stored in Database -> articles table -> category column`  |
 | `published_from`    | date     | Filter from date (YYYY-MM-DD)                 |
 | `published_to`      | date     | Filter to date (YYYY-MM-DD)                   |
 | `limit`             | integer  | Items per page (default: 20)                  |

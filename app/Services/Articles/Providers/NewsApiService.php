@@ -9,27 +9,37 @@ class NewsApiService implements ArticleProviderInterface
 {
     public function fetchArticles(): array {
         try {
-            $response = Http::get(config('services.newsapi.base_url') . '/' . config('services.newsapi.version') . '/top-headlines', [
-                'country' => 'us',
-                'apiKey' => config('services.newsapi.key')
-            ]);
+            $categories = config('services.newsapi.categories');
+            $allArticles = [];
+            
+            foreach ($categories as $category) {
+                $response = Http::get(config('services.newsapi.base_url') . '/' . config('services.newsapi.version') . '/top-headlines', [
+                    'country' => 'us',
+                    'category' => $category,
+                    'apiKey' => config('services.newsapi.key')
+                ]);
 
-            $articles = [];
-            if ($response->successful()) {
+                if (!$response->successful()) {
+                    logger()->error("NewsAPI fetch failed for category {$category}: " . $response->body());
+                    continue;
+                }
+
                 $data = $response->json();
 
                 foreach ($data['articles'] as $item) {
-                    $articles[] = [
+                    $allArticles[] = [
                         'title' => $item['title'],
-                        'description' => $item['description'],
+                        'description' => $item['description'] ?? null,
                         'url' => $item['url'],
                         'source' => 'newsapi',
-                        'published_at' => date('Y:m:d H:m:s', strtotime($item['publishedAt'])),
+                        'category' => $category,
+                        'author' => $item['author'] ?? 'NA',
+                        'published_at' => date('Y-m-d H:i:s', strtotime($item['publishedAt'])),
                     ];
                 }
             }
 
-            return $articles;
+            return $allArticles;
         } catch (\Throwable $e) {
             logger()->error('NewsAPI fetch failed: ' . $e->getMessage());
             return [];

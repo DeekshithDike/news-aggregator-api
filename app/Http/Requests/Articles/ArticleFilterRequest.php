@@ -25,7 +25,11 @@ class ArticleFilterRequest extends FormRequest
     {
         return [
             'keyword' => 'sometimes|string',
+            'category' => 'sometimes|string',
+            'source' => 'sometimes|string',
             'preferred_sources' => 'sometimes|string',
+            'preferred_categories' => 'sometimes|string',
+            'preferred_authors' => 'sometimes|string',
             'published_from' => 'sometimes|date',
             'published_to' => 'sometimes|date|after_or_equal:published_from',
             'limit' => 'sometimes|integer|min:1|max:100',

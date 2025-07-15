@@ -13,19 +13,24 @@ class NewYorkTimesApiService implements ArticleProviderInterface
                 'api-key' => config('services.nytimes.key'),
             ]);
 
-            $articles = [];
-            if ($response->successful()) {
-                $data = $response->json();
+            if (!$response->successful()) {
+                logger()->error('NewsAPI fetch failed: ' . $response->body());
+                return [];
+            }
 
-                foreach ($data['results'] as $item) {
-                    $articles[] = [
-                        'title' => $item['title'],
-                        'description' => $item['abstract'],
-                        'url' => $item['url'],
-                        'source' => 'nytimes',
-                        'published_at' => date('Y:m:d H:m:s', strtotime($item['published_date'])),
-                    ];
-                }
+            $articles = [];
+            $data = $response->json();
+
+            foreach ($data['results'] as $item) {
+                $articles[] = [
+                    'title' => $item['title'],
+                    'description' => $item['abstract'] ?? null,
+                    'url' => $item['url'],
+                    'source' => 'nytimes',
+                    'category' => $item['section'] ?? 'NA',
+                    'author' => $item['byline'] ?? 'NA',
+                    'published_at' => date('Y:m:d H:m:s', strtotime($item['published_date'])),
+                ];
             }
 
             return $articles;
