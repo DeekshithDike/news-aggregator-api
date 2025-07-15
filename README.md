@@ -101,13 +101,13 @@ Refer Laravel Document: https://laravel.com/docs/11.x/homestead#configuring-cron
 
 ### 9. API Request Format
 
-# API Endpoint:
+#### API Endpoint:
 `GET /api/v1/articles`
 
-# Required Header:
+#### Required Header:
 `Accept: application/json`
 
-# Query Parameters
+#### Query Parameters
 
 | Parameter           | Type     | Description                                   |
 |--------------------|----------|-----------------------------------------------|
